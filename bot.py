@@ -27,7 +27,6 @@ from handlers import (
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 logger = logging.getLogger(__name__)
 
-# Новая функция для логирования всех входящих сообщений
 def log_all_messages(update: Update, context: CallbackContext):
     user = update.effective_user
     if update.message:
@@ -71,9 +70,8 @@ def main():
     dp.add_handler(CommandHandler("menu", menu_command))
     dp.add_handler(CallbackQueryHandler(menu_callback, pattern="^MENU_"))
 
-    # Сначала логируем все сообщения (group=0)
+    
     dp.add_handler(MessageHandler(Filters.all, log_all_messages), group=0)
-    # Потом обрабатываем ввод граммов (group=1)
     dp.add_handler(MessageHandler(Filters.text, handle_food_grams), group=1)
 
     updater.start_polling()
